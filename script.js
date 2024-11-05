@@ -23,7 +23,7 @@ const artifactInfo = {
     'romulus': 'Romulus',
     'pot': 'Ancient_Roman_pottery',
     'roman_coins': 'Roman_currency',
-    'helmet': 'Galea_helmet',
+    'helmet': 'Roman_weapon',
     'julius_caesar': 'Julius_Caesar',
     'claudia': 'Claudia_(gens)',
     'bust': 'Roman_sculpture'
@@ -609,7 +609,7 @@ class InfoPanel {
 
 
 // Enhanced artifact loading function with Wikipedia integration
-async function loadArtifactModel(url, position, rotation, x = 0.5, y = 0.5, z = 0.5) {
+async function loadArtifactModel(url, position, rotation,isLast, x = 0.5, y = 0.5, z = 0.5,) {
     const artifactName = url.split('/').pop().split('.')[0];
     const wikiTitle = artifactInfo[artifactName];
     
@@ -632,7 +632,13 @@ async function loadArtifactModel(url, position, rotation, x = 0.5, y = 0.5, z = 
 
         // Create info panel
         const panelPosition = position.clone();
-        panelPosition.x += 1; // Offset panel to the right of artifact
+        if (isLast === true){
+            panelPosition.x += 2
+        }
+        else{
+            panelPosition.x += 1
+        }
+         // Offset panel to the right of artifact
         const infoPanel = new InfoPanel(summary, panelPosition);
         scene.add(infoPanel.panel);
         
@@ -722,7 +728,9 @@ const loadArtifacts = () => {
         else if (index == 5) { x = 0.08; y = 0.08; z = 0.08; }
         else if (index == 4) { x = 1; y = 1; z = 1 }
         else if (index == 7) { x = 0.18; y = 0.18; z = 0.18; }
-        loadArtifactModel(artifactModelUrls[index], pos, artifactRotations[index], x, y, z);
+        let m = false;
+        if(index == 7){m = true}
+        loadArtifactModel(artifactModelUrls[index], pos, artifactRotations[index],m, x, y, z);
     });
 };
 
