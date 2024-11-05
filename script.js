@@ -23,7 +23,7 @@ const artifactInfo = {
     'romulus': 'Romulus',
     'pot': 'Ancient_Roman_pottery',
     'roman_coins': 'Roman_currency',
-    'helmet': 'Roman_weapon',
+    'helmet': 'Galea_(helmet)',
     'julius_caesar': 'Julius_Caesar',
     'claudia': 'Claudia_(gens)',
     'bust': 'Roman_sculpture'
@@ -378,8 +378,6 @@ class InfoPanel {
             transparent: true,
             opacity: 0.7,
             side: THREE.DoubleSide,
-            shininess: 100,
-            specular: 0x666666
         });
         this.panel = new THREE.Mesh(panelGeometry, panelMaterial);
         
