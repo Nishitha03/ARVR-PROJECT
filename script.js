@@ -18,16 +18,11 @@ fontLoader.load('https://cdn.jsdelivr.net/npm/three@0.161.0/examples/fonts/helve
 });
 
 // Define artifact information mapping
-const artifactInfo = {
-    'dagger': 'Pugio',
-    'romulus': 'Romulus',
-    'pot': 'Ancient_Roman_pottery',
-    'roman_coins': 'Roman_currency',
-    'helmet': 'Galea_(helmet)',
-    'julius_caesar': 'Julius_Caesar',
-    'claudia': 'Claudia_(gens)',
-    'bust': 'Roman_sculpture'
-};
+
+const artifactInfo = {'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fdagger.glb?alt=media&token=aa849bf1-e745-424d-9f59-3f3b6935d822': 'Pugio', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fromulus.glb?alt=media&token=0aa559a2-9cde-47b0-b2d3-330ef0e0e6dc': 'Romulus', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fpot.glb?alt=media&token=63d01c0c-4893-42c7-b409-fcf01331774b': 'Ancient_Roman_pottery', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Froman_coins.glb?alt=media&token=5df8a955-6bcf-4127-8860-604d3354fcf4': 'Roman_currency', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fhelmet.glb?alt=media&token=5d6c20fd-3891-4adb-9109-f478fef46c68': 'Galea_(helmet)', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fjulius_caesar.glb?alt=media&token=d369886b-3980-468a-8033-af0fde80593a': 'Julius_Caesar', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fclaudia.glb?alt=media&token=aacc59d9-5e85-45ad-88e6-55d7f728a4d9': 'Claudia_(gens)', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fbust.glb?alt=media&token=b8615138-b92e-43d1-a0b4-19a0cfdc86ad': 'Roman_sculpture'}
+
+
+
 
 // Create maps to store text meshes and info for each artifact
 const textMeshes = new Map();
@@ -62,6 +57,7 @@ directionalLight.shadow.camera.far = 50;
 directionalLight.shadow.bias = -0.0001;
 directionalLight.shadow.normalBias = 0.02;
 scene.add(directionalLight);
+
 
 const pointLight1 = new THREE.PointLight(0xffcc99, 2.2, 30);
 pointLight1.position.set(0, 5, -5);
@@ -100,13 +96,13 @@ scene.add(hemisphereLight);
 
 // Ground setup
 const floorGeometry = new THREE.PlaneGeometry(20, 20);
-const floorTexture = new THREE.TextureLoader().load('./Floor texture.png');
+const floorTexture = new THREE.TextureLoader().load('https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2FFloor%20texture.png?alt=media&token=a7e5a2d4-c7a5-4ca5-aae0-64abee548e25');
 floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
 floorTexture.repeat.set(4, 4);
 const floorMaterial = new THREE.MeshStandardMaterial({ 
     map: floorTexture,
     roughness: 0.7, 
-    metalness: 0.3,
+    metalness: 0.4444,
     side: THREE.DoubleSide
 });
 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
@@ -115,13 +111,13 @@ floor.receiveShadow = true;
 scene.add(floor);
 
 // Wall setup
-const wallTexture = new THREE.TextureLoader().load('./wall_texture.jpg');
+const wallTexture = new THREE.TextureLoader().load('https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fwall_texture.jpg?alt=media&token=bd3ba934-41e9-4d83-b2b3-ca30f034ae35');
 wallTexture.wrapS = wallTexture.wrapT = THREE.RepeatWrapping;
 wallTexture.repeat.set(2, 1);
 const wallMaterial = new THREE.MeshStandardMaterial({ 
     map: wallTexture,
     roughness: 0.6, 
-    metalness: 0.3, 
+    metalness: 0.4, 
     side: THREE.DoubleSide 
 });
 const wallGeometry = new THREE.PlaneGeometry(20, 3);
@@ -154,7 +150,7 @@ scene.add(rightWall);
 
 // Roof
 const roofGeometry = new THREE.PlaneGeometry(20, 20);
-const roofTexture = new THREE.TextureLoader().load('./ceiling texture.png');
+const roofTexture = new THREE.TextureLoader().load('https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fceiling%20texture.png?alt=media&token=1316c2cb-b420-40f6-bfdb-ba7f63997125');
 roofTexture.wrapS = roofTexture.wrapT = THREE.RepeatWrapping;
 roofTexture.repeat.set(4, 4);
 const roofMaterial = new THREE.MeshStandardMaterial({ 
@@ -241,133 +237,6 @@ function loadTableModel(url, position) {
         console.error('Error loading table model:', error);
     });
 }
-
-
-// class InfoPanel {
-//     constructor(text, position) {
-//         // Create smaller background panel with fixed size
-//         const panelGeometry = new THREE.PlaneGeometry(1, 0.6); // Reduced size
-//         const panelMaterial = new THREE.MeshPhongMaterial({
-//             color: 0x1a1a1a,
-//             transparent: true,
-//             opacity: 0.9,
-//             side: THREE.DoubleSide
-//         });
-//         this.panel = new THREE.Mesh(panelGeometry, panelMaterial);
-        
-//         // Add border
-//         const borderGeometry = new THREE.EdgesGeometry(panelGeometry);
-//         const borderMaterial = new THREE.LineBasicMaterial({ color: 0x2c3e50, linewidth: 2 });
-//         const border = new THREE.LineSegments(borderGeometry, borderMaterial);
-//         this.panel.add(border);
-
-//         // Position the panel next to artifact
-//         this.panel.position.copy(position);
-//         this.panel.position.x += 0.3; // Offset to the right of the artifact
-        
-//         // Create text wrapper with fixed orientation
-//         this.textWrapper = new THREE.Group();
-//         this.panel.add(this.textWrapper);
-        
-//         this.panel.visible = false;
-//     }
-
-//     updateText(font, text) {
-//         // Clear existing text
-//         while (this.textWrapper.children.length > 0) {
-//             const child = this.textWrapper.children[0];
-//             child.geometry.dispose();
-//             child.material.dispose();
-//             this.textWrapper.remove(child);
-//         }
-    
-//         // Split text into words and create text geometry
-//         const words = text.split(' ');
-//         let currentLine = '';
-//         let yPosition = 0.2; // Adjusted starting position
-//         const lineHeight = 0.08; // Reduced line height
-//         const maxWidth = 0.9; // Reduced maximum width for text lines
-    
-//         const textMaterial = new THREE.MeshStandardMaterial({ 
-//             color: 0xffffff,
-//             metalness: 0,
-//             roughness: 1
-//         });
-    
-//         words.forEach((word, index) => {
-//             const testLine = currentLine + word + ' ';
-//             const testGeometry = new TextGeometry(testLine, {
-//                 font: font,
-//                 size: 0.05, // Reduced text size
-//                 height: 0.001,
-//                 curveSegments: 4,
-//                 bevelEnabled: false
-//             });
-//             testGeometry.computeBoundingBox();
-//             const lineWidth = testGeometry.boundingBox.max.x - testGeometry.boundingBox.min.x;
-    
-//             if (lineWidth > maxWidth && currentLine !== '') {
-//                 this.createTextLine(font, textMaterial, currentLine, yPosition);
-//                 yPosition -= lineHeight;
-//                 currentLine = word + ' ';
-//             } else {
-//                 currentLine = testLine;
-//             }
-
-//             testGeometry.dispose();
-
-//             if (index === words.length - 1 && currentLine !== '') {
-//                 this.createTextLine(font, textMaterial, currentLine, yPosition);
-//             }
-//         });
-//     }
-
-//     createTextLine(font, material, text, yPosition) {
-//         const textGeometry = new TextGeometry(text, {
-//             font: font,
-//             size: 0.05, // Reduced text size
-//             height: 0.001,
-//             curveSegments: 4,
-//             bevelEnabled: false
-//         });
-//         textGeometry.computeBoundingBox();
-        
-//         const lineWidth = textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x;
-//         const backgroundGeometry = new THREE.PlaneGeometry(lineWidth + 0.05, 0.08);
-//         const backgroundMaterial = new THREE.MeshStandardMaterial({ 
-//             color: 0x333333, 
-//             transparent: true, 
-//             opacity: 0.8 
-//         });
-        
-//         const background = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
-//         background.position.set(0, yPosition, 0); // Centered position
-//         this.textWrapper.add(background);
-
-//         // Create and position text
-//         const textMesh = new THREE.Mesh(textGeometry, material);
-//         textMesh.position.set( -0.0 - lineWidth/2, yPosition, 0.01);
-//         this.textWrapper.add(textMesh);
-//     }
-
-//     show() {
-//         this.panel.visible = true;
-//     }
-
-//     hide() {
-//         this.panel.visible = false;
-//     }
-
-//     // Simplified update method - no rotation needed
-//     update() {
-//         // Panel is now static, so no updates needed
-//         return;
-//     }
-// }
-
-
-
-
 
 class InfoPanel {
     constructor(text, position) {
@@ -486,7 +355,7 @@ class InfoPanel {
         // Simplified white text material with good visibility
         const textMaterial = new THREE.MeshStandardMaterial({ 
             color: 0xffffff,
-            metalness: 0.2,
+            metalness: 0.4,
             roughness: 0.3
         });
     
@@ -549,11 +418,6 @@ class InfoPanel {
     hide() {
         this.targetOpacity = 0;
         this.panel.visible = false;
-        // setTimeout(() => {
-        //     if (this.currentOpacity <= 0.1) {
-                
-        //     }
-        // }, 500);
     }
 
     update(cameraPosition) {
@@ -608,7 +472,7 @@ class InfoPanel {
 
 // Enhanced artifact loading function with Wikipedia integration
 async function loadArtifactModel(url, position, rotation,isLast, x = 0.5, y = 0.5, z = 0.5,) {
-    const artifactName = url.split('/').pop().split('.')[0];
+    const artifactName = url
     const wikiTitle = artifactInfo[artifactName];
     
     const summary = await fetchWikiSummary(wikiTitle);
@@ -677,11 +541,13 @@ function checkProximity() {
             }
         }
     });
+    
 }
 
 // Table and artifact positions
-const tableModelUrl = './table_new.glb';
-const artifactModelUrls = ['./dagger.glb', './romulus.glb', './pot.glb', './roman_coins.glb', './helmet.glb', './julius_caesar.glb', './claudia.glb', './bust.glb'];
+const tableModelUrl = 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Ftable_new.glb?alt=media&token=2235aadd-7e91-4c14-abcc-fb1049b3b135';
+
+const artifactModelUrls = ['https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fdagger.glb?alt=media&token=aa849bf1-e745-424d-9f59-3f3b6935d822', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fromulus.glb?alt=media&token=0aa559a2-9cde-47b0-b2d3-330ef0e0e6dc', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fpot.glb?alt=media&token=63d01c0c-4893-42c7-b409-fcf01331774b' , 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Froman_coins.glb?alt=media&token=5df8a955-6bcf-4127-8860-604d3354fcf4', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fhelmet.glb?alt=media&token=5d6c20fd-3891-4adb-9109-f478fef46c68', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fjulius_caesar.glb?alt=media&token=d369886b-3980-468a-8033-af0fde80593a', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fclaudia.glb?alt=media&token=aacc59d9-5e85-45ad-88e6-55d7f728a4d9', 'https://firebasestorage.googleapis.com/v0/b/musiq-6f2a8.appspot.com/o/arvr%2Fbust.glb?alt=media&token=b8615138-b92e-43d1-a0b4-19a0cfdc86ad'];
 
 const tablePositions = [
     new THREE.Vector3(-6, 0, -3),
@@ -832,6 +698,3 @@ function animate() {
 }
 
 animate();
-
-
-
