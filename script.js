@@ -697,4 +697,105 @@ function animate() {
     composer.render();
 }
 
+// Add this CSS to your HTML file head or in a style tag
+const style = document.createElement('style');
+style.textContent = `
+.start-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 1s ease;
+}
+
+.start-overlay h1 {
+    color: white;
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+    font-family: serif;
+}
+
+.start-overlay p {
+    color: #cccccc;
+    font-size: 1.2rem;
+    max-width: 500px;
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
+.controls-info {
+    color: #999999;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.start-button {
+    background: white;
+    color: black;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.start-button:hover {
+    background: #e0e0e0;
+    transform: scale(1.05);
+}
+
+.fade-out {
+    opacity: 0;
+}
+`;
+document.head.appendChild(style);
+
+// Create the start screen HTML
+const startOverlay = document.createElement('div');
+startOverlay.className = 'start-overlay';
+startOverlay.innerHTML = `
+    <h1>Roman Artifacts Museum</h1>
+    <p>Explore ancient Roman artifacts in our virtual museum.<br>
+       Get close to items to reveal their historical information.</p>
+    <div class="controls-info">
+        <p>Controls:</p>
+        <p>W, A, S, D - Move</p>
+        <p>Mouse - Look around</p>
+        <p>ESC - Exit fullscreen</p>
+    </div>
+    <button class="start-button">Enter Museum</button>
+`;
+
+// Add the overlay to the page
+document.body.appendChild(startOverlay);
+
+// Handle start button click
+const startButton = startOverlay.querySelector('.start-button');
+startButton.addEventListener('click', () => {
+    startOverlay.classList.add('fade-out');
+    
+    // Start the PointerLock after animation
+    setTimeout(() => {
+        controls.lock();
+        // Remove the overlay completely after fade
+        startOverlay.remove();
+    }, 1000);
+});
+
+// Modify the existing pointer lock click listener
+document.body.removeEventListener('click', () => controls.lock());
+document.body.addEventListener('click', () => {
+    if (!document.querySelector('.start-overlay')) {
+        controls.lock();
+    }
+});
+
 animate();
