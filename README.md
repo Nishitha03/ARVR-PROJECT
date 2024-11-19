@@ -143,5 +143,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 For issues and feature requests, please use the GitHub issue tracker or contact nishithaanand2004@gmail.com
 
-![image](https://github.com/user-attachments/assets/4679e6bb-7193-4cce-a0d6-4b0e02eef4ba)
+![roman_museum](https://github.com/user-attachments/assets/5c8dd537-c95a-416a-b801-dcdea3059899)
 
